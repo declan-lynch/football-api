@@ -77,6 +77,9 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "indigophp/doctrine-annotation-autoload": {
+        "version": "v0.1.0"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },

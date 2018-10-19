@@ -25,7 +25,7 @@ class ApiController extends AbstractController
 
     public function index()
     {
-        return new Response('this is where the api sits');
+        return new Response('this is where the api lives');
     }
 
     public function getLeague($id)
@@ -61,7 +61,7 @@ class ApiController extends AbstractController
                 }
             }
         } catch (\Exception $e) {
-            $error = 'no data received';
+            $error = 'no data received : '.$e->getMessage();
         }
         return new Response($error, 404);
     }

@@ -9,6 +9,7 @@ class ControllerTest extends WebTestCase
     private $client;
     private $logindetails;
     private $content_type;
+    private $headerkey;
 
     protected function setUp()
     {
@@ -18,6 +19,7 @@ class ControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'kerching'
         ];
         $this->content_type = ['CONTENT_TYPE' => 'application/json'];
+        $this->headerkey = 'HTTP_APIkey';
     }
 
     private function getStatusCode()
@@ -83,7 +85,8 @@ class ControllerTest extends WebTestCase
     public function test_api_team_post_url()
     {
         $jwt = $this->fetchJWT();
-        $this->client->request('POST', '/api/team?key='.$jwt, [], [], ['CONTENT_TYPE' => 'application/json']);
+        $response = $this->client->request('POST', '/api/team?key='.$jwt, [], [], $this->content_type);
+        var_dump($this->getResponseText($response));
         $this->assertEquals(404, $this->getStatusCode());
     }
 
@@ -97,7 +100,7 @@ class ControllerTest extends WebTestCase
     public function test_api_league_post_url()
     {
         $jwt = $this->fetchJWT();
-        $this->client->request('POST', '/api/league?key='.$jwt, [], [], ['CONTENT_TYPE' => 'application/json']);
+        $this->client->request('POST', '/api/league?key='.$jwt, [], [], $this->content_type);
         $this->assertEquals(404, $this->getStatusCode());
     }
 
@@ -212,7 +215,7 @@ class ControllerTest extends WebTestCase
     public function test_api_call_with_key_in_header()
     {
         $jwt = $this->fetchJWT();
-        $this->client->request('GET', '/api/team/1', [], [], ['HTTP_AUTHORISE' => $jwt]);
+        $this->client->request('GET', '/api/team/1', [], [], [$this->headerkey => $jwt]);
         $this->assertEquals(200, $this->getStatusCode());
     }
 
@@ -226,7 +229,7 @@ class ControllerTest extends WebTestCase
     public function test_api_call_with_invalid_key_in_header()
     {
         $jwt = $this->fetchJWT();
-        $this->client->request('GET', '/api/team/1', [], [], ['HTTP_AUTHORISE' => $jwt.'_now_invalid']);
+        $this->client->request('GET', '/api/team/1', [], [], [$this->headerkey => $jwt.'_now_invalid']);
         $this->assertEquals(401, $this->getStatusCode());
     }
 

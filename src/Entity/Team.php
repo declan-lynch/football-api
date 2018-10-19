@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Groups as JsonGroups;
+use Doctrine\ORM\Event\PreFlushEventArgs;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TeamRepository")
@@ -37,18 +37,16 @@ class Team extends BaseEntity
     private $tmpleagueid;
 
     /**
-     * @Groups("default")
+     * @JsonGroups("default")
      */
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @Groups("default")
+     * @JsonGroups("default")
      */
-
     public function getName(): ?string
     {
         return $this->name;
@@ -62,9 +60,8 @@ class Team extends BaseEntity
     }
 
     /**
-     * @Groups("default")
+     * @JsonGroups("default")
      */
-
     public function getStrip(): ?string
     {
         return $this->strip;
@@ -91,9 +88,8 @@ class Team extends BaseEntity
     }
 
     /**
-     * @Groups("default")
+     * @JsonGroups("default")
      */
-
     public function getLeagueId(): ?int
     {
         return $this->league ? $this->league->getId() : null ;
@@ -108,7 +104,6 @@ class Team extends BaseEntity
 
     /**
      * @ORM\PreFlush()
-     *
      */
     public function checkLeague(PreFlushEventArgs $event)
     {
