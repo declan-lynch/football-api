@@ -1,0 +1,61 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+api:
+    path: /api
+    controller: App\Controller\ApiController::index
+
+getleague:
+    path: /api/league/{id}
+    controller: App\Controller\ApiController::getLeague
+    defaults: { id : 'all' }
+    methods: [GET, HEAD]
+
+
+getteam:
+    path: /api/team/{id}
+    controller: App\Controller\ApiController::getTeam
+    defaults: { id : 'all' }
+    methods: [GET, HEAD]
+
+createteam:
+    path: /api/team
+    controller: App\Controller\ApiController::createTeam
+    methods: [POST]
+
+createleague:
+    path: /api/league
+    controller: App\Controller\ApiController::createLeague
+    methods: [POST]
+
+updateteam:
+    path: /api/team/{id}
+    controller: App\Controller\ApiController::updateTeam
+    defaults: { id : null }
+    methods: [PUT]
+
+deleteleague:
+    path: /api/league/{id}
+    controller: App\Controller\ApiController::deleteLeague
+    defaults: { id : null }
+    methods: [DELETE]
+
+login:
+    path: /login
+    controller: App\Controller\LoginController::index
+
+logout:
+    path: /logout
+
+docs: &docs
+    path: /
+    controller: App\Controller\DocsController::index
+
+docs_catchall:
+    <<: *docs
+    path: /{catchall}
+    requirements:
+      catchall: ".+"
+
+

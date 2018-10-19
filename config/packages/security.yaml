@@ -1,0 +1,49 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        in_memory:
+            memory:
+                users:
+                    commercialpeople:
+                        password: kerching
+                        roles: 'ROLE_USER'
+        api_key_user_provider:
+            id: App\Security\ApiKeyUserProvider
+
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        api:
+            pattern: ^/api
+            stateless: true
+            simple_preauth:
+                authenticator: App\Security\ApiKeyAuthenticator
+            provider: api_key_user_provider
+        main:
+            anonymous: true
+            http_basic: ~
+            provider: in_memory
+            logout:
+                path: logout
+                target: /
+
+
+
+            # activate different ways to authenticate
+
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: true
+            # https://symfony.com/doc/current/security/form_login_setup.html
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/login, roles: ROLE_USER }
+        - { path: ^/api, roles: ROLE_API }
+        # - { path: ^/profile, roles: ROLE_USER }
