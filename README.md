@@ -18,6 +18,20 @@ composer install
 
 You may be prompted to update php modules if some are missing
 
+***
+**VERY IMPORTANT!!!!!**
+
+YMMV but had lots of problems getting ORM annotations to work
+
+Before running server - run the following command
+
+<pre>
+composer dump-autoload
+</pre>
+
+You have been warned....
+
+***
 You can check that everything is set up properly by running the tests
 
 <pre>
